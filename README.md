@@ -8,11 +8,9 @@ A full-stack web application for managing geographic entities, monitoring their 
 
 **Tech Stack:** React · TypeScript · Vite · Go · SQLite · Leaflet · OpenStreetMap · Swagger UI
 
-//---------------------------------------------//
+----
 
 # 🇮🇩 Bahasa Indonesia
-
-//--------------------------------------------//
 
 ## 1. Tentang GeoTrack
 
@@ -254,11 +252,9 @@ Informasi lebih lanjut didokumentasikan dalam `AGENT.md`.
 - Implementasi difokuskan pada kebutuhan pengelolaan entitas geografis dan demonstrasi lokal.
 
 
-//---------------------------------------------//
+----
 
 # 🇬🇧 English
-
-//--------------------------------------------//
 
 ## 1. About GeoTrack
 
