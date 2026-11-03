@@ -1,0 +1,164 @@
+openapi: 3.0.3
+
+info:
+  title: GeoTrack REST API
+  version: 1.0.0
+  description: API untuk mengelola entitas geografis GeoTrack.
+
+servers:
+  - url: http://localhost:8080
+
+tags:
+  - name: Health
+    description: Pemeriksaan status backend
+  - name: Entities
+    description: Pengelolaan entitas geografis
+
+paths:
+  /api/health:
+    get:
+      tags: [Health]
+      summary: Periksa status backend
+      responses:
+        '200':
+          description: Backend berjalan
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: success
+                  message:
+                    type: string
+                    example: GeoTrack Backend is running
+
+  /api/entities:
+    get:
+      tags: [Entities]
+      summary: Ambil seluruh entitas
+      responses:
+        '200':
+          description: Daftar entitas
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Entity'
+        '500':
+          description: Kesalahan server
+
+    post:
+      tags: [Entities]
+      summary: Tambah entitas baru
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EntityInput'
+      responses:
+        '201':
+          description: Entitas berhasil ditambahkan
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Entity'
+        '400':
+          description: Data atau format JSON tidak valid
+        '500':
+          description: Kesalahan server
+
+  /api/entities/{id}:
+    parameters:
+      - name: id
+        in: path
+        required: true
+        description: ID entitas
+        schema:
+          type: integer
+          minimum: 1
+
+    put:
+      tags: [Entities]
+      summary: Perbarui entitas
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EntityInput'
+      responses:
+        '200':
+          description: Entitas berhasil diperbarui
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Entity'
+        '400':
+          description: Data atau ID tidak valid
+        '404':
+          description: Entitas tidak ditemukan
+        '500':
+          description: Kesalahan server
+
+    delete:
+      tags: [Entities]
+      summary: Hapus entitas
+      responses:
+        '204':
+          description: Entitas berhasil dihapus
+        '400':
+          description: ID tidak valid
+        '404':
+          description: Entitas tidak ditemukan
+        '500':
+          description: Kesalahan server
+
+components:
+  schemas:
+    EntityInput:
+      type: object
+      required:
+        - name
+        - type
+        - status
+        - latitude
+        - longitude
+      properties:
+        name:
+          type: string
+          minLength: 1
+          example: Kendaraan Operasional Jakarta
+        type:
+          type: string
+          enum: [Vehicle, IoT Device, Facility]
+          example: Vehicle
+        status:
+          type: string
+          enum: [Active, Inactive]
+          example: Active
+        latitude:
+          type: number
+          format: double
+          minimum: -90
+          maximum: 90
+          example: -6.2088
+        longitude:
+          type: number
+          format: double
+          minimum: -180
+          maximum: 180
+          example: 106.8456
+
+    Entity:
+      allOf:
+        - $ref: '#/components/schemas/EntityInput'
+        - type: object
+          required: [id]
+          properties:
+            id:
+              type: integer
+              example: 1
