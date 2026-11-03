@@ -42,6 +42,22 @@ GeoTrack menggunakan REST API berbasis Go untuk mengelola data, SQLite sebagai p
 | Database | SQLite (`modernc.org/sqlite`) |
 | Dokumentasi API | OpenAPI 3.0.3, Swagger UI |
 
+### Alasan Pemilihan Teknologi dan Library
+
+| Teknologi / Library | Alasan Pemilihan |
+|---|---|
+| React | Memudahkan pengembangan antarmuka berbasis komponen yang dapat digunakan kembali, seperti dashboard, tabel, formulir, dan peta. |
+| TypeScript | Menyediakan pemeriksaan tipe data untuk membantu mengurangi kesalahan saat mengelola data entitas dan respons API. |
+| Vite | Menyediakan development server yang cepat dan proses build frontend yang sederhana. |
+| React Leaflet & Leaflet | Memudahkan integrasi peta interaktif dengan React, termasuk marker dan pemusatan peta berdasarkan koordinat entitas. |
+| OpenStreetMap | Digunakan sebagai sumber tile peta tanpa memerlukan API key untuk demonstrasi lokal, dengan tetap mengikuti kebijakan penggunaan tile. |
+| Lucide React | Menyediakan ikon antarmuka yang konsisten dan mudah digunakan pada komponen React. |
+| Go & net/http | Mendukung pembuatan REST API menggunakan standard library Go tanpa memerlukan framework backend tambahan. |
+| SQLite & modernc.org/sqlite | Menyediakan penyimpanan data persisten yang ringan tanpa perlu menjalankan server database terpisah. |
+| OpenAPI & Swagger UI | Memudahkan dokumentasi kontrak API serta pengujian endpoint secara interaktif. |
+
+Pemilihan teknologi tersebut mempertimbangkan kesederhanaan arsitektur, kemudahan pengembangan, kebutuhan visualisasi geografis, dan kemudahan menjalankan aplikasi secara lokal.
+
 ## 3. Fitur Utama
 
 - **Dashboard:** Menampilkan ringkasan jumlah entitas, status Active/Inactive, serta kategori Vehicle, IoT Device, dan Facility.
@@ -271,6 +287,22 @@ GeoTrack uses a Go REST API for data management, SQLite for persistent storage, 
 | HTTP Server | Go `net/http` |
 | Database | SQLite (`modernc.org/sqlite`) |
 | API Documentation | OpenAPI 3.0.3, Swagger UI |
+
+### Technology and Library Selection Rationale
+
+| Technology / Library | Reason for Selection |
+|---|---|
+| React | Enables reusable UI components for the dashboard, tables, forms, and map. |
+| TypeScript | Provides static type checking to help reduce errors when handling entity data and API responses. |
+| Vite | Offers a fast development server and a straightforward frontend build process. |
+| React Leaflet & Leaflet | Simplifies interactive map integration with React, including markers and map navigation based on entity coordinates. |
+| OpenStreetMap | Provides map tiles for local demonstration without requiring an API key, subject to the tile usage policy. |
+| Lucide React | Provides consistent icons that integrate easily with React components. |
+| Go & net/http | Enables REST API development using Go's standard library without an additional backend framework. |
+| SQLite & modernc.org/sqlite | Provides lightweight persistent storage without requiring a separate database server. |
+| OpenAPI & Swagger UI | Supports API contract documentation and interactive endpoint testing. |
+
+These technologies were selected to keep the architecture simple, support geographic visualization, and make the application easy to develop and run locally.
 
 ## 3. Key Features
 
