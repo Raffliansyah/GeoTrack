@@ -25,9 +25,31 @@ function EntityForm({ onClose, onSave, onEdit, editingEntity }: EntityFormProps)
 
     const [isSubmitting, setIsSubmitting] = useState(false)
     const [submitError, setSubmitError] = useState('')
+  
+  const handleCoordinateChange = (
+    value: string,
+    field: 'latitude' | 'longitude'
+  ) => {
+    const coordinateRegex = /^-?\d*\.?\d*$/
+
+    if (!coordinateRegex.test(value)) {
+      return
+    }
+
+    if (field === 'latitude') {
+      setLatitude(value)
+    } else {
+      setLongitude(value)
+    }
+  }
 
   const lat = Number(latitude)
   const lng = Number(longitude)
+
+  const validCoordinateFormat = /^-?(?:\d+\.?\d*|\.\d+)$/
+
+  const isLatitudeFormatValid = validCoordinateFormat.test(latitude)
+  const isLongitudeFormatValid = validCoordinateFormat.test(longitude)
 
   const isValidType =
     type === 'Vehicle' ||
@@ -42,8 +64,8 @@ function EntityForm({ onClose, onSave, onEdit, editingEntity }: EntityFormProps)
     name.trim().length > 0 &&
     isValidType &&
     isValidStatus &&
-    latitude.trim() !== '' &&
-    longitude.trim() !== '' &&
+    isLatitudeFormatValid &&
+    isLongitudeFormatValid &&
     Number.isFinite(lat) &&
     Number.isFinite(lng) &&
     lat >= -90 &&
@@ -203,20 +225,24 @@ function EntityForm({ onClose, onSave, onEdit, editingEntity }: EntityFormProps)
 
                 <input
                   id="entity-latitude"
-                  type="number"
-                  step="any"
-                  min="-90"
-                  max="90"
+                  type="text"
+                  inputMode="decimal"
+                  autoComplete="off"
                   placeholder="Contoh: -6.2088"
                   value={latitude}
-                  onChange={(e) => setLatitude(e.target.value)}
+                  onChange={(e) =>
+                    handleCoordinateChange(e.target.value, 'latitude')
+                  }
                   required
                 />
 
                 {latitude.trim() !== '' &&
-                  (!Number.isFinite(lat) || lat < -90 || lat > 90) && (
+                  (!isLatitudeFormatValid ||
+                    !Number.isFinite(lat) ||
+                    lat < -90 ||
+                    lat > 90) && (
                     <small className="form-error" role="alert">
-                      Latitude harus antara -90 sampai 90.
+                      Latitude harus berupa angka antara -90 sampai 90.
                     </small>
                   )}
               </div>
@@ -228,20 +254,24 @@ function EntityForm({ onClose, onSave, onEdit, editingEntity }: EntityFormProps)
 
                 <input
                   id="entity-longitude"
-                  type="number"
-                  step="any"
-                  min="-180"
-                  max="180"
+                  type="text"
+                  inputMode="decimal"
+                  autoComplete="off"
                   placeholder="Contoh: 106.8456"
                   value={longitude}
-                  onChange={(e) => setLongitude(e.target.value)}
+                  onChange={(e) =>
+                    handleCoordinateChange(e.target.value, 'longitude')
+                  }
                   required
                 />
 
                 {longitude.trim() !== '' &&
-                  (!Number.isFinite(lng) || lng < -180 || lng > 180) && (
+                  (!isLongitudeFormatValid ||
+                    !Number.isFinite(lng) ||
+                    lng < -180 ||
+                    lng > 180) && (
                     <small className="form-error" role="alert">
-                      Longitude harus antara -180 sampai 180.
+                      Longitude harus berupa angka antara -180 sampai 180.
                     </small>
                   )}
               </div>
